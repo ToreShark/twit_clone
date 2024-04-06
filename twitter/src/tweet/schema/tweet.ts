@@ -19,4 +19,13 @@ export class Tweet extends Document {
     likes: Types.ObjectId[];
 }
 
-export const TweetSchema = SchemaFactory.createForClass(Tweet);
+const TweetSchema = SchemaFactory.createForClass(Tweet);
+
+TweetSchema.methods.toJSON = function() {
+    const tweet = this;
+    const tweetObject = tweet.toObject();
+    tweetObject.hasImage = !!tweetObject.image;
+    return tweetObject;
+};
+
+export { TweetSchema };

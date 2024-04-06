@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
+    let user: User
     @State var width = UIScreen.main.bounds.width - 90
     @State var x = -UIScreen.main.bounds.width + 90
     var body: some View {
@@ -18,6 +19,7 @@ struct MainView: View {
                         TopBar(x: $x)
                         Home()
                     }
+                    .offset(x: x + width)
                     SlideMenu()
                         .shadow(color: Color.black.opacity(x != 0 ? 0.1 : 0), radius: 5, x:5, y:5)
                         .offset(x: x)
@@ -61,6 +63,3 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    MainView()
-}

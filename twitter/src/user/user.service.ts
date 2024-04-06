@@ -15,19 +15,20 @@ export class UserService {
         const existingUser = await this.userModel.findOne({
             $or: [
                 { email: createUserDto.email },
-                { username: createUserDto.username },
-                { website: createUserDto.website}
+                { username: createUserDto.username }
             ]
         });
 
         if (existingUser) {
             throw new ConflictException('User with this email or username already exists');
         }
-        const hashedPassword = await this.hashingService.hash(createUserDto.password); // Хешируем пароль
+
+        const hashedPassword = await this.hashingService.hash(createUserDto.password);
         const newUser = new this.userModel({
             ...createUserDto,
-            password: hashedPassword // Используем хешированный пароль
+            password: hashedPassword
         });
+
         return newUser.save();
     }
     async getAllUsers(): Promise<User[]> {
@@ -75,6 +76,7 @@ export class UserService {
         }
 
         const resizedBuffer = await sharp(fileBuffer)
+            .rotate()
             .resize({ width: 250, height: 250 })
             .png()
             .toBuffer();

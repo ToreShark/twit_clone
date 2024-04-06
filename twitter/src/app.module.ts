@@ -11,6 +11,7 @@ import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import {JwtModule} from "@nestjs/jwt";
 import { IamModule } from './iam/iam.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
     imports: [
@@ -26,7 +27,8 @@ import { IamModule } from './iam/iam.module';
         }),
         TweetModule,
         UserModule,
-        IamModule],
+        IamModule,
+        NotificationModule],
     controllers: [],
     providers: [],
 })

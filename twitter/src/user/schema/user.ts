@@ -62,3 +62,15 @@ UserSchema.virtual('tweets', {
     localField: '_id',  
     foreignField: 'userId',  
 });
+
+UserSchema.virtual('notificationsSend', {
+    ref: 'Notification',
+    localField: '_id',
+    foreignField: 'notSenderId',
+});
+
+UserSchema.virtual('notificationsReceive', {
+    ref: 'Notification',
+    localField: '_id',
+    foreignField: 'notReceiverId',
+});

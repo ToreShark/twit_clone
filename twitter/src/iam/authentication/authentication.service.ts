@@ -38,7 +38,7 @@ export class AuthenticationService {
         }
     }
     async signIn(signInDto: SignInDto) {
-        const user = await this.usersModel.findOne({ email: signInDto.email });
+        const user = await this.usersModel.findOne({email: signInDto.email});
         if (!user) {
             throw new UnauthorizedException('User does not exist');
         }
@@ -48,7 +48,7 @@ export class AuthenticationService {
             throw new UnauthorizedException('Password does not match');
         }
 
-        const accessToken = await this.jwtService.signAsync( // 👈
+        const accessToken = await this.jwtService.signAsync(
             {
                 sub: user.id,
                 email: user.email,
@@ -60,9 +60,15 @@ export class AuthenticationService {
                 expiresIn: this.jwtConfiguration.accessTokenTtl,
             },
         );
+
         user.tokens.push(accessToken);
         await user.save();
+
+        const userResponse = user.toJSON(); 
+        delete userResponse.avatar; 
+
         return {
+            user: userResponse,
             accessToken,
         };
     }
